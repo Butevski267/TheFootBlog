@@ -63,7 +63,7 @@ class Users(UserMixin,db.Model):
     email = db.Column(db.String(250), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False )
     name = db.Column(db.String(250), nullable=False)
-    profile_pic = db.Column(db.String(250), nullable=True)
+    profile_pic = db.Column(db.String(250), nullable=True, default='avatar.png')
 
     posts = relationship('BlogPost', back_populates = 'author')
     comments = relationship('Comment', back_populates = 'author')
