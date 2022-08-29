@@ -1,6 +1,6 @@
 import uuid
 
-from flask import Flask, render_template, redirect, url_for, request, flash, abort, escape
+from flask import Flask, render_template, redirect, url_for, request, flash, abort, escape, jsonify
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -69,6 +69,13 @@ class Users(UserMixin,db.Model):
     comments = relationship('Comment', back_populates = 'author')
     likes = relationship('Like', back_populates = 'author')
     dislikes = relationship('Dislike', back_populates='author')
+
+    def obj_to_dict(self):  # for build json format
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+        }
 class BlogPost(db.Model):
     __tablename__='blog_posts'
     id = db.Column(db.Integer, primary_key=True)
@@ -116,20 +123,19 @@ class Dislike(db.Model):
     comments = relationship('Comment', back_populates='dislikes')
 
 
-#db.create_all()
+db.create_all()
+
+
 
 @app.route('/admin')
 @admin_only
 def admin():
     users = Users.query.all()
-    return jsonify(users)
+    users_dict = functions.dict_helper(users)
+    return jsonify(users_dict)
 # NEWS ROUTES___________________________________________________________________________________________________________
 @app.route('/')
 def home():
-    if current_user.is_authenticated:
-        if not current_user.profile_pic:
-            current_user.profile_pic='avatar.png'
-            db.session.commit()
     return render_template('index.html',posts=api.posts, logged_in = current_user.is_authenticated)
 
 # FORUM ROUTES__________________________________________________________________________________________________________

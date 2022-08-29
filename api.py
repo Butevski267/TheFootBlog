@@ -19,4 +19,3 @@ parameters = {
 posts = requests.get(url=url, headers=headers, params=parameters).json()['results'][0:10]
 
 
-

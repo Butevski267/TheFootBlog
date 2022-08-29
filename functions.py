@@ -14,3 +14,7 @@ def send_email(name,email,phone_number, message):
         connection.sendmail(from_addr=my_email,
                             to_addrs=my_email,
                             msg=email_message)
+
+def dict_helper(objlist):
+    result2 = [item.obj_to_dict() for item in objlist]
+    return result2
