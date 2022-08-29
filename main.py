@@ -25,7 +25,7 @@ def create_app():
     app = Flask(__name__)
     Bootstrap(app)
     app.secret_key= os.getenv('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL',"sqlite:///footblog.db")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     return app
 
@@ -118,7 +118,11 @@ class Dislike(db.Model):
 
 #db.create_all()
 
-
+@app.route('/admin')
+@admin_only
+def admin():
+    users = Users.query.all()
+    return jsonify(users)
 # NEWS ROUTES___________________________________________________________________________________________________________
 @app.route('/')
 def home():
