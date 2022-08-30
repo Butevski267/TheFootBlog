@@ -35,13 +35,13 @@
                     <div class="col-md-4">
                         <div class="profile-img">
                             <img src="static/img/{{current_user.profile_pic}}" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
+                            <div class=" ">
                                 <form method="post" action="{{url_for('profile_page')}}" enctype="multipart/form-data">
                                     {{form.csrf_token}}
-                                    <!-- {{wtf.quick_form(form)}}-->
-                                    {{form.image.label}} {{form.image(size=30)}}
+                                    <!-- {{wtf.quick_form(form)}}
+                                    {{form.image.label}} {{form.image(size=30)}} -->
                                     <br>
-                                    <input type="submit" value="Submit">
+                                   <!-- <input type="submit" value="Submit"> -->
                                 </form>
 
                             </div>
