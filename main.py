@@ -25,7 +25,7 @@ def create_app():
     app = Flask(__name__)
     Bootstrap(app)
     app.secret_key= os.getenv('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL','sqlite:///footblog.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///footblog.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     return app
 
