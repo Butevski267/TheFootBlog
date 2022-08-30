@@ -123,7 +123,7 @@ class Dislike(db.Model):
     comments = relationship('Comment', back_populates='dislikes')
 
 
-db.create_all()
+#db.create_all()
 
 
 
@@ -357,11 +357,12 @@ def login():
         email = login_form.email.data
         password = login_form.password.data
 
-        user = Users.query.filter_by(email=email).first()
+        user = db.session.query(Users).filter_by(email=email).first()
 
         # If user is not registered
-        if not user:
+        if user is None:
             flash("That email does not exist. Please try again")
+            return redirect(url_for('login'))
         elif not check_password_hash(user.password, password):
             flash("Password incorrect, please try again.")
         else:
