@@ -25,7 +25,7 @@ def create_app():
     app = Flask(__name__)
     Bootstrap(app)
     app.secret_key= os.getenv('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL',"sqlite:///footblog.db")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     return app
 
@@ -82,7 +82,7 @@ class BlogPost(db.Model):
     title = db.Column(db.String(250), unique=False, nullable=False)
     subtitle = db.Column(db.String(250), default='None', nullable=True )
     date = db.Column(db.String(250), nullable=False)
-    body = db.Column(db.Text(), nullable=False)
+    body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), default='None')
 
     # Create Foreign Key, "users.id" the users refers to the tablename of User.
@@ -95,7 +95,7 @@ class BlogPost(db.Model):
 class Comment(db.Model):
     __tablename__= 'comments'
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.Text(), nullable=False)
+    text = db.Column(db.Text, nullable=False)
     date = db.Column(db.String(250), nullable=False)
 
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
