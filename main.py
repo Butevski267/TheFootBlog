@@ -127,7 +127,7 @@ class Dislike(db.Model):
     comments = relationship('Comment', back_populates='dislikes')
 
 
-#db.create_all()
+db.create_all()
 
 
 
