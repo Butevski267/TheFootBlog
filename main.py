@@ -8,6 +8,7 @@ from flask_gravatar import Gravatar
 from sqlalchemy.orm import relationship
 import requests
 import os
+import re
 import api,forms,functions
 from datetime import date
 from functools import wraps
@@ -21,11 +22,14 @@ from flask_login import LoginManager, login_user, current_user, logout_user,logi
 from dotenv import load_dotenv
 load_dotenv()
 
+uri = os.getenv("DATABASE_URL")
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
 def create_app():
     app = Flask(__name__)
     Bootstrap(app)
     app.secret_key= os.getenv('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL1')
+    app.config['SQLALCHEMY_DATABASE_URI'] = uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     return app
 
